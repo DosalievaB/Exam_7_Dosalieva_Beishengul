@@ -17,8 +17,17 @@ namespace Library.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(string name, int page = 1)
         {
+            List<Book> book = null;
+            if(name != null)
+            {
+                book = _db.Books.Where(p => p.Name == name).Include(p => p.Name).ToList();
+            }
+            else
+            {
+                book = _db.Books.Include(p => p.Name).ToList();
+            }
             var books = _db.Books.ToList();
             int pageSize = 8;
             var count = books.Count;
