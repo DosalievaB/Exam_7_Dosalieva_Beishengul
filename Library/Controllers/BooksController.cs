@@ -17,9 +17,35 @@ namespace Library.Controllers
             _appEnvironment = appEnvironment;
         }
 
-        public IActionResult Index(int page = 1)
+        public IActionResult Index(BooksSortState sortOrder = BooksSortState.NameAsc, int page = 1)
         {
-            
+            List<Book> book = _db.Books.ToList();
+            ViewBag.TitleSort = sortOrder == BooksSortState.NameAsc ? BooksSortState.NameDesc : BooksSortState.NameAsc;
+            ViewBag.AuthorSort = sortOrder == BooksSortState.AuthorAsc ? BooksSortState.AuthorDesc : BooksSortState.AuthorAsc;
+            ViewBag.DateAddedSort = sortOrder == BooksSortState.DateAddDesc ? BooksSortState.DateAddDesc : BooksSortState.DateAddAsc;
+            switch (sortOrder)
+            {
+                case BooksSortState.NameAsc:
+                    book = book.OrderBy(x => x.Name).ToList();
+                    break;
+                case BooksSortState.NameDesc:
+                    book = book.OrderByDescending(x => x.Name).ToList();
+                    break;
+                case BooksSortState.AuthorAsc:
+                    book = book.OrderBy(x => x.Author).ToList();
+                    break;
+                case BooksSortState.AuthorDesc:
+                    book = book.OrderByDescending(x => x.Author).ToList();
+                    break;
+                case BooksSortState.DateAddAsc:
+                    book = book.OrderBy(x => x.DateAdd).ToList();
+                    break;
+                case BooksSortState.DateAddDesc:
+                    book = book.OrderByDescending(x => x.DateAdd).ToList();
+                    break;
+            }
+            return View(book.ToList());
+
             var books = _db.Books.ToList();
             int pageSize = 8;
             var count = books.Count;

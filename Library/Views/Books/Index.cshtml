@@ -12,7 +12,9 @@
                  <img class="card-img-top" src="@book.Image" alt="Product Thumbnail" style="width: 200px; height: 200px;">
                 <div class="card-body">
                   <h5 class="card-title">@book.Name</h5>
-                  <p class="card-text">Дата добавления: @book.DateAdd</p>
+                  <a asp-action="Index" asp-all-route-sortOrder="@ViewBag.NameSort">Название</a>
+                  <a asp-action="Index" asp-all-route-sortOrder="@ViewBag.AuthorSort">Автор</a>
+                  <a asp-action="Index" asp-all-route-sortOrder="@ViewBag.DateAddSort">Дата добавления</a>
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                           <a class="btn btn-sm btn-outline-secondary" asp-controller="Books" asp-action="Detail" asp-route-bookId ="@book.Id">Подробнее</a>

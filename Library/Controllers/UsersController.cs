@@ -11,30 +11,31 @@ namespace Library.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly LibraryContext _context;
-
-        public UsersController(LibraryContext context)
+        private LibraryContext _db;
+        private readonly IWebHostEnvironment _appEnvironment;
+        public UsersController(LibraryContext db, IWebHostEnvironment appEnvironment)
         {
-            _context = context;
+            _db = db;
+            _appEnvironment = appEnvironment;
         }
-
+        
         // GET: Users
         public async Task<IActionResult> Index()
         {
-              return _context.Users != null ? 
-                          View(await _context.Users.ToListAsync()) :
+            return _db.Users != null ? 
+                          View(await _db.Users.ToListAsync()) :
                           Problem("Entity set 'LibraryContext.Users'  is null.");
         }
 
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _db.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _db.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -59,8 +60,8 @@ namespace Library.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
-                await _context.SaveChangesAsync();
+                _db.Add(user);
+                await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(user);
@@ -69,12 +70,12 @@ namespace Library.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _db.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = await _db.Users.FindAsync(id);
             if (user == null)
             {
                 return NotFound();
@@ -98,8 +99,8 @@ namespace Library.Controllers
             {
                 try
                 {
-                    _context.Update(user);
-                    await _context.SaveChangesAsync();
+                    _db.Update(user);
+                    await _db.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,12 +121,12 @@ namespace Library.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Users == null)
+            if (id == null || _db.Users == null)
             {
                 return NotFound();
             }
 
-            var user = await _context.Users
+            var user = await _db.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -140,23 +141,23 @@ namespace Library.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Users == null)
+            if (_db.Users == null)
             {
                 return Problem("Entity set 'LibraryContext.Users'  is null.");
             }
-            var user = await _context.Users.FindAsync(id);
+            var user = await _db.Users.FindAsync(id);
             if (user != null)
             {
-                _context.Users.Remove(user);
+                _db.Users.Remove(user);
             }
             
-            await _context.SaveChangesAsync();
+            await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)
         {
-          return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_db.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
