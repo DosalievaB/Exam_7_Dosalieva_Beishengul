@@ -1,0 +1,24 @@
+﻿@model Book
+
+@{
+    ViewBag.Title = "Детали Книги";
+}
+
+<h2>@Model.Name</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <p><strong>Наименование:</strong> @Model.Name</p>
+        <p><strong>Автор книги:</strong> @Model.Author</p>
+        <p><strong>Фото обложки:</strong> @Model.Image</p>
+        <p><strong>Год выпуска:</strong> @Model.YearIssue</p>
+        <p><strong>Описание книги:</strong> @Model.Description</p>
+        <p><strong>Дата добавления:</strong> @Model.DateAdd</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-dark" asp-controller="Book" asp-action="Update" asp-route-productId="@Model.Id">Редактировать</a>
+        <a class="btn btn-primary" href="@Url.Action("Index", "Book")">Назад</a>
+    </div>
+</div>

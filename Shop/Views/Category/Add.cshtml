@@ -1,0 +1,29 @@
+﻿@model Category
+
+@{
+    ViewData["Title"] = "Добавить категории";
+}
+
+<h2>Заполните форму для добавления категорий</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Add" method="post">
+            <div class="form-group">
+                <label asp-for="Name">Название категорий</label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description">Описание</label>
+                <input asp-for="Description" class="form-control" />
+            </div>
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-info">@ViewBag.Message</div>
+            }
+            <button type="submit" class="btn btn-primary">Добавить</button>
+            <a href="#" onclick="history.back();" class="btn btn-primary">Назад</a>
+        </form>
+    </div>
+</div>

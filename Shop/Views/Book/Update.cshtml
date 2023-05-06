@@ -1,0 +1,43 @@
+﻿@model Book
+
+<h2>Редактирование книги</h2>
+
+<form asp-action="Update" asp-controller="Product" method="post">
+    <div class="form-group">
+        <label asp-for="Name">Название:</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Author">Автор книги:</label>
+        <input asp-for="Author" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Image">Фото обложки:</label>
+        <input asp-for="Image" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="YearIssue">Год выпуска:</label>
+        <input asp-for="YearIssue" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Описание книги:</label>
+        <input asp-for="Description" class="form-control" />
+    </div>
+    <div class="form-group">
+    <label>Категория</label>             
+    <select asp-for="CategoryId" class="form-control" required>
+        <option value="">Выберите категорию</option>
+        @if (ViewData["Categories"] != null)
+        {
+            foreach (var category in (List<Category>)ViewData["Categories"])
+            {
+                <option value="@category.Id">@category.Name</option>
+            }
+        }
+    </select>
+</div>
+    <input type="hidden" asp-for="Id" />
+     <input type="hidden" asp-for="DateAdd" />
+    <input type="hidden" asp-for="CategoryId" />
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+</form>
