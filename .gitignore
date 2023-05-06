@@ -1,0 +1,16 @@
+.vs/
+
+
+# Build results
+
+[Dd]ebug/
+
+[Bb]in/
+
+[Oo]bj/
+
+[Db]db/
+
+*.db
+*.db-shm
+*.db-wal
