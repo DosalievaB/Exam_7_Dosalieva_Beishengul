@@ -44,7 +44,6 @@ namespace Library.Controllers
                     book = book.OrderByDescending(x => x.DateAdd).ToList();
                     break;
             }
-            return View(book.ToList());
 
             var books = _db.Books.ToList();
             int pageSize = 8;
@@ -57,6 +56,7 @@ namespace Library.Controllers
                 Books = items
             };
             return View(bookPagging);
+            return View(book.ToList());
         }
         public IActionResult Add()
         {
